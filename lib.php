@@ -112,7 +112,15 @@ class enrol_stripepayment_plugin extends enrol_plugin {
      * @return bool(true or false)
      */
     public function show_enrolme_link(stdClass $instance) {
-        return ($instance->status == ENROL_INSTANCE_ENABLED);
+        global $CFG, $USER;
+        if ($instance->status != ENROL_INSTANCE_ENABLED) {
+            return false;
+        }
+        if ($instance->customint5) {
+            require_once("$CFG->dirroot/cohort/lib.php");
+            return cohort_is_member($instance->customint5, $USER->id);
+        }
+        return true;
     }
 
     /**
@@ -202,6 +210,18 @@ class enrol_stripepayment_plugin extends enrol_plugin {
 
         if ($instance->enrolenddate != 0 && $instance->enrolenddate < time()) {
             return ob_get_clean();
+        }
+
+        if ($instance->customint5) {
+            require_once("$CFG->dirroot/cohort/lib.php");
+            if (!cohort_is_member($instance->customint5, $USER->id)) {
+                $cohort = $DB->get_record('cohort', array('id'=>$instance->customint5));
+                if (!$cohort) {
+                    return null;
+                }
+                $a = format_string($cohort->name, true, array('context'=>context::instance_by_id($cohort->contextid)));
+                return $OUTPUT->box(markdown_to_html(get_string('cohortnonmemberinfo', 'enrol_self', $a)));
+            }
         }
 
         $course = $DB->get_record('course', array('id' => $instance->courseid));
