@@ -66,3 +66,6 @@ $string['maxenrolled_help'] = 'Specifies the maximum number of users that can st
 $string['maxenrolledreached'] = 'Maximum number of users allowed to stripepayment-enrol was already reached.';
 
 $string['canntenrol'] = 'Enrolment is disabled or inactive';
+$string['cohortnonmemberinfo'] = 'Only members of cohort \'{$a}\' can self-enrol.';
+$string['cohortonly'] = 'Only cohort members';
+$string['cohortonly_help'] = 'Select a cohort if you want to restrict self enrolment only to members of this cohort. Change of this setting does not affect existing enrolments.';
