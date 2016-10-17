@@ -58,6 +58,7 @@ if ($instanceid) {
     $instance = new stdClass();
     $instance->id       = null;
     $instance->courseid = $course->id;
+    $instance->customint5 = 0;
 }
 
 $mform = new enrol_stripepayment_edit_form(null, array($instance, $plugin, $context));
@@ -75,6 +76,7 @@ if ($mform->is_cancelled()) {
         $instance->currency       = $data->currency;
         $instance->roleid         = $data->roleid;
         $instance->customint3     = $data->customint3;
+        $instance->customint5     = $data->customint5;
         $instance->enrolperiod    = $data->enrolperiod;
         $instance->enrolstartdate = $data->enrolstartdate;
         $instance->enrolenddate   = $data->enrolenddate;
@@ -87,7 +89,7 @@ if ($mform->is_cancelled()) {
 
     } else {
         $fields = array('status' => $data->status, 'name' => $data->name, 'cost' => unformat_float($data->cost),
-                        'currency' => $data->currency, 'roleid' => $data->roleid, 'enrolperiod' => $data->enrolperiod, 'customint3' => $data->customint3, 'enrolstartdate' => $data->enrolstartdate, 'enrolenddate' => $data->enrolenddate);
+                        'currency' => $data->currency, 'roleid' => $data->roleid, 'enrolperiod' => $data->enrolperiod, 'customint3' => $data->customint3, 'customint5'=>$data->customint5, 'enrolstartdate' => $data->enrolstartdate, 'enrolenddate' => $data->enrolenddate);
         $plugin->add_instance($course, $fields);
     }
 
